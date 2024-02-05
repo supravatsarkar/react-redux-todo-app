@@ -7,9 +7,16 @@ type TTodoCardProps = {
   title: string;
   description: string;
   isCompleted: boolean;
+  priority: string;
 };
 
-const TodoCard = ({ id, title, description, isCompleted }: TTodoCardProps) => {
+const TodoCard = ({
+  id,
+  title,
+  description,
+  priority,
+  isCompleted,
+}: TTodoCardProps) => {
   const dispatch = useAppDispatch();
   return (
     <div className="bg-slate-100 p-3 rounded-lg flex justify-between items-center">
@@ -20,6 +27,7 @@ const TodoCard = ({ id, title, description, isCompleted }: TTodoCardProps) => {
         id="task-completed"
       />
       <p className="font-semibold">{title}</p>
+      <p className="font-semibold">{priority}</p>
       {isCompleted ? (
         <p className="font-semibold text-green-500">Done</p>
       ) : (

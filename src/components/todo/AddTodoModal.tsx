@@ -14,10 +14,12 @@ import { addTodo } from "@/redux/feature/todoSlice";
 import { useAppDispatch } from "@/redux/hook";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { useState } from "react";
+import SelectPriority from "./SelectPriority";
 
 export function AddTodoModal() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [priority, setPriority] = useState("Low");
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -25,7 +27,10 @@ export function AddTodoModal() {
     console.log("title, description=>", title, description);
     const id = Math.random().toString(36).substring(2);
     console.log("id=>", id);
-    dispatch(addTodo({ id, title, description, isCompleted: false }));
+    dispatch(addTodo({ id, title, description, priority, isCompleted: false }));
+  };
+  const handleSelectPriority = (value: string) => {
+    setPriority(value);
   };
   return (
     <Dialog>
@@ -60,6 +65,15 @@ export function AddTodoModal() {
                 id="description"
                 className="col-span-3"
               />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="priority" className="text-right">
+                Priority
+              </Label>
+              <SelectPriority
+                id="priority"
+                handleSelectPriority={handleSelectPriority}
+              ></SelectPriority>
             </div>
           </div>
           <DialogFooter>

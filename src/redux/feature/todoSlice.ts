@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-type TTodo = {
+export type TTodo = {
   id: string;
   title: string;
   description: string;
+  priority: string;
   isCompleted: boolean;
 };
 
@@ -30,7 +31,13 @@ const todoSlice = createSlice({
       newTodos.push(task as TTodo);
       state.todos = newTodos;
     },
+    filterTodo: (state, action) => {
+      state.todos = state.todos.filter(
+        (item) => item.priority.toLowerCase() === action.payload.toLowerCase()
+      );
+    },
   },
 });
-export const { addTodo, removeTodo, toggleTodo } = todoSlice.actions;
+export const { addTodo, removeTodo, toggleTodo, filterTodo } =
+  todoSlice.actions;
 export default todoSlice.reducer;
