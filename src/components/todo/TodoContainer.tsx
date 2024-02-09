@@ -37,7 +37,7 @@ const TodoContainer = () => {
     <div>
       <div className="flex justify-between items-center mb-4 ">
         <AddTodoModal />
-        <TodoFilter setPriority={setPriority} />
+        <TodoFilter priority={priority} setPriority={setPriority} />
       </div>
       <div className="bg-primary-gradient w-full h-full rounded-xl p-3 space-y-2">
         <div>

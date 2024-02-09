@@ -9,16 +9,18 @@ import {
 type TSelectPriorityProps = {
   id: string;
   handleSelectPriority: any;
+  defaultValue: string;
 };
 
 export default function SelectPriority({
   id,
   handleSelectPriority,
+  defaultValue,
 }: TSelectPriorityProps) {
   return (
     <Select
       onValueChange={(value) => handleSelectPriority(value)}
-      defaultValue="Low"
+      defaultValue={defaultValue}
     >
       <SelectTrigger id={id} className="w-[180px]">
         <SelectValue />

@@ -16,8 +16,9 @@ import {
 // import { TTodo } from "@/redux/feature/todoSlice";
 export type TTodoFilterProps = {
   setPriority: React.Dispatch<React.SetStateAction<string>>;
+  priority: string;
 };
-export function TodoFilter({ setPriority }: TTodoFilterProps) {
+export function TodoFilter({ setPriority, priority }: TTodoFilterProps) {
   // const [position, setPosition] = React.useState("medium");
   // const dispatch = useAppDispatch();
   // const { todos } = useAppSelector((state) => state.todos);
@@ -42,8 +43,11 @@ export function TodoFilter({ setPriority }: TTodoFilterProps) {
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Filter by priority</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value="" onValueChange={(v) => setPriority(v)}>
-          <DropdownMenuRadioItem value="">All</DropdownMenuRadioItem>
+        <DropdownMenuRadioGroup
+          value={priority}
+          onValueChange={(v) => setPriority(v)}
+        >
+          <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="High">High</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="Medium">Medium</DropdownMenuRadioItem>
           <DropdownMenuRadioItem value="Low">Low</DropdownMenuRadioItem>
