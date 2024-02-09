@@ -1,34 +1,54 @@
-import { useAppSelector } from "@/redux/hook";
+// import { useAppSelector } from "@/redux/hook";
 import { AddTodoModal } from "./AddTodoModal";
 import TodoCard from "./TodoCard";
 import { TodoFilter } from "./TodoFilter";
-import React, { useEffect } from "react";
+import React from "react";
+import { useGetTodosQuery } from "@/redux/api/api";
+import type { TTodo } from "@/redux/feature/todoSlice";
 
 const TodoContainer = () => {
-  const { todos } = useAppSelector((state) => state.todos);
-  const [filterDate, setFilterDate] = React.useState(todos);
-  useEffect(() => {
-    {
-      setFilterDate(todos);
-    }
-  }, [todos]);
-  console.log("todos", todos);
+  // From local state
+  // const { todos } = useAppSelector((state) => state.todos);
+
+  // From state server
+  // const todoArray: TTodo[] = [];
+  const [priority, setPriority] = React.useState("");
+  const {
+    data: todos,
+    error,
+    isLoading,
+  } = useGetTodosQuery(priority, {
+    // pollingInterval: 1000,
+    // refetchOnMountOrArgChange: 3,
+  });
+  console.log("get api error=>", error);
+
+  // console.log("filterDate", filterData);
+  // useEffect(() => {
+  //   if (todos && todos.length) {
+  //     setFilterData(todos);
+  //   }
+  // }, [todos]);
+  console.log("isLoading,  todos", isLoading, todos);
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <div>
       <div className="flex justify-between items-center mb-4 ">
         <AddTodoModal />
-        <TodoFilter setFilterDate={setFilterDate} />
+        <TodoFilter setPriority={setPriority} />
       </div>
       <div className="bg-primary-gradient w-full h-full rounded-xl p-3 space-y-2">
         <div>
-          {filterDate.length === 0 && (
+          {todos.length === 0 && (
             <div className="bg-slate-100 p-3 rounded-xl flex justify-center items-center text-2xl font-bold">
               <p>There is no task pending</p>
             </div>
           )}
         </div>
-        {filterDate.map((item) => (
-          <TodoCard key={item.id} {...item} />
+        {todos.map((item: TTodo) => (
+          <TodoCard key={item._id} {...item} />
         ))}
       </div>
     </div>
